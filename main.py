@@ -16,7 +16,7 @@ from video_generator import VerticalVideoMaker
 
 # May need to use these commands to run locally
 # Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy Unrestricted
-# openai-env\Scripts\activate
+# content_farm_venv\Scripts\activate
 
 
 def main():
