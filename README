@@ -1,0 +1,3 @@
+Installing can be done with:
+pip install -r requirements
+Then running the Magick installer and specifying a path for it

@@ -1,0 +1,6 @@
+Pillow == 9.5.0
+openai
+black
+selenium
+moviepy
+scipy
