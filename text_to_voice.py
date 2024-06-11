@@ -42,3 +42,6 @@ def single_speaker_model():
         language="en",
         file_path=output_path,
     )
+
+
+print_TTS_models()

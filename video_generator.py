@@ -131,7 +131,7 @@ class VerticalVideoMaker:
 
     def main(list_of_text_tuples):
         imported_video = VerticalVideoMaker.import_video_clip(
-            "tom_and_jerry_clips/Tom and Jerry - 002 - Midnight Snack [1941].mp4"
+            "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4"
         )
         footer_clip = VerticalVideoMaker.import_footer("temp_footer.png")
         all_text_clips = VerticalVideoMaker.concatenate_text_clips(list_of_text_tuples)
