@@ -9,7 +9,7 @@
 # By feeding each slide of text into text 2 speech individually, we wind up with many short audio clips so we'll know just how long they last
 
 
-class TextSplitter:
+class TextSplitter:  # TODO: Needs tests
 
     # Define Global Variables
     on_screen_char_limit = 270  # = max_chars_per_line * lines on screen
