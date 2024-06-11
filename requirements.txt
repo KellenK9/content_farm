@@ -4,3 +4,4 @@ black
 selenium
 moviepy
 scipy
+TTS
