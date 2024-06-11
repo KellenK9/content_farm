@@ -5,3 +5,5 @@ selenium
 moviepy
 scipy
 TTS
+python-espeak
+espeakng
