@@ -36,6 +36,8 @@ def single_speaker_model():
         text="Hello! This is the first test of the taco tron text to speech model. I cant wait to use this in a video format.",
         file_path=output_path,
     )
+    # First attempt seemed to use 3 different voices, 1 per sentence. The second voice sounded nice but the other 2 were rough.
+    # Compute time for this little blurb ended up being around an hour with my old CPU
 
 
 single_speaker_model()
