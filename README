@@ -2,3 +2,5 @@ Installing can be done with:
 pip install -r requirements
 Then running the Magick installer and specifying a path for it
 Then run the espeak installer and add to PATH
+Then, before running commands run the line below:
+Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
