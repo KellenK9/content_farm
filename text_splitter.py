@@ -45,7 +45,7 @@ class TextSplitter:
     def sentence_splitter(sentence):  # TODO: Needs a lot of work
         final_splits = []
         still_splitting = [sentence]
-        splitting_characters = ["!", ";", ":", "(", " "]
+        splitting_characters = ["!", ";", ":", " "]
 
         for char in splitting_characters:
             for chunk in still_splitting:

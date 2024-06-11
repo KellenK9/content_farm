@@ -31,7 +31,7 @@ def multi_speaker_model():
 
 def single_speaker_model():
     # Init TTS with the target model name and run
-    tts = TTS(model_name="tts_models/de/thorsten/tacotron2-DDC").to(device)
+    tts = TTS(model_name="tts_models/en/multi-dataset/tortoise-v2")
     tts.tts_to_file(
         text="Hello! This is the first test of the taco tron text to speech model. I cant wait to use this in a video format.",
         file_path=output_path,
