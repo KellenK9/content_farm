@@ -4,3 +4,5 @@ Then running the Magick installer and specifying a path for it
 Then run the espeak installer and add to PATH
 Then, before running commands run the line below:
 Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
+Should I include all of this in the path? Even the .exe?
+The term 'espeak-ng' is not recognized as the name of a cmdlet, function, script file, or operable program. Looks like it's not added to the path correctly
