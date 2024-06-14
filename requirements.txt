@@ -1,4 +1,7 @@
+--extra-index-url https://pypi.ngc.nvidia.com --trusted-host https://pypi.ngc.nvidia.com
 Pillow == 9.5.0
+networkx == 2.8.0
+transformers==4.29.2
 openai
 black
 selenium
@@ -6,4 +9,6 @@ moviepy
 scipy
 TTS
 espeakng
-transformers==4.29.2
+setuptools
+wheel
+nvidia-cuda-runtime-cu12

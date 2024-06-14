@@ -88,4 +88,6 @@ def test_models():
         print(f"{model[i]} took this many seconds: {durations[i]}")
 
 
-test_models()
+# test_models()
+
+print(torch.cuda.is_available())

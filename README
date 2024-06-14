@@ -1,4 +1,5 @@
 Installing can be done with:
+Run the CUDA installer
 pip install -r requirements
 Then running the Magick installer and specifying a path for it
 Then run the espeak installer and add C:\Program Files\eSpeak NG to PATH
