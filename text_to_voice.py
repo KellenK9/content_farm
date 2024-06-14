@@ -61,7 +61,7 @@ def tortoise_model(text):
 def test_models():
     # "<model_type>/<language>/<dataset>/<model_name>"
     model_names = [
-        ("tts_models/en/multi-dataset/tortoise-v2", "tortoise"),
+        # ("tts_models/en/multi-dataset/tortoise-v2", "tortoise"),  # 5835 seconds
         ("tts_models/en/ljspeech/tacotron2-DDC_ph", "tacotron2_DDC_ph"),
         ("tts_models/en/ljspeech/glow-tts", "glow"),
         ("tts_models/uk/mai/glow-tts", "glow_uk"),
@@ -82,7 +82,7 @@ def test_models():
         single_speaker_model(model[0], model[1])
         duration = time.time() - curr_time
         print(f"{model[1]} took this many seconds: {duration}")
-        durations.append[duration]
+        durations.append(duration)
 
     for i in range(len(durations)):
         print(f"{model[i]} took this many seconds: {durations[i]}")
