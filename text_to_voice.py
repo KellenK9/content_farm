@@ -3,8 +3,8 @@ from TTS.api import TTS
 import time
 
 # Tortoise Imports
-from TTS.tts.configs.tortoise_config import TortoiseConfig
-from TTS.tts.models.tortoise import Tortoise
+# from TTS.tts.configs.tortoise_config import TortoiseConfig
+# from TTS.tts.models.tortoise import Tortoise
 
 # Define Global Variables
 device = "cuda" if torch.cuda.is_available() else "cpu"
