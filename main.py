@@ -7,7 +7,7 @@ from video_generator import VerticalVideoMaker
 
 # Generate content via ChatGPT or web scraping with Selenium
 
-# Generate voice over using test to speech
+# Generate voice over using text to speech
 
 # Create video output using text
 
