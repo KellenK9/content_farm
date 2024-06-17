@@ -135,7 +135,7 @@ class VerticalVideoMaker:
     def create_audio_clip(audio_path):
         return mpy.AudioFileClip(f"{audio_path}.wav")
 
-    def concatenate_audio(audio_tuple_list):
+    def concatenate_audio(audio_tuple_list):  # Each tuple is (audio clip, duration)
         audio_array = [audio_tuple_list[0][0]]
         curr_start_time = 0
         for i in range(len(audio_tuple_list)):
@@ -152,7 +152,7 @@ class VerticalVideoMaker:
         for i in range(len(list_of_text_tuples)):
             total_duration += list_of_text_tuples[i][1]
             curr_clip = VerticalVideoMaker.create_audio_clip(i)
-            audio_tuples_list.append(curr_clip, list_of_text_tuples[i][1])
+            audio_tuples_list.append((curr_clip, list_of_text_tuples[i][1]))
         compiled_audio = VerticalVideoMaker.concatenate_audio(audio_tuples_list)
         imported_video = VerticalVideoMaker.import_video_clip(
             "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4",
