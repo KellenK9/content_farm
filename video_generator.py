@@ -86,9 +86,9 @@ class VerticalVideoMaker:
             current_start = current_start + text_tuple[1] + buffer
         return text_clips
 
-    def import_video_clip(file_location):
+    def import_video_clip(file_location, start_time, duration):
         clip = mpy.VideoFileClip(file_location)
-        clip = clip.subclip(45, 65)  # clipping by seconds
+        clip = clip.subclip(start_time, start_time + duration)  # clipping by seconds
         clip = clip.volumex(0.8)  # Reduce the audio volume (volume x 0.8)
         clip = clip.fx(vfx.resize, width=1080)
         clip = clip.set_position(
@@ -112,7 +112,9 @@ class VerticalVideoMaker:
         )
         return clip
 
-    def compile_video(video_clip, footer_clip, text_clips):
+    def compile_video(
+        video_clip, footer_clip, text_clips, compiled_audio, total_duration
+    ):
         clips = [video_clip, footer_clip]
         for text_clip in text_clips:
             clips.append(text_clip)
@@ -122,21 +124,45 @@ class VerticalVideoMaker:
                 size=VerticalVideoMaker.SCREEN_SIZE,
             )
             .on_color(color=VerticalVideoMaker.WHITE, col_opacity=1)
-            .set_duration(20)
-        )
+            .set_duration(total_duration)
+            .set_audio(compiled_audio)
+        )  # .set_audio(compiled_audio)
         return final_clip
 
     def export_video(final_clip):
         final_clip.write_videofile("video_with_python.mp4", fps=10)
 
-    def main(list_of_text_tuples):
+    def create_audio_clip(audio_path):
+        return mpy.AudioFileClip(f"{audio_path}.wav")
+
+    def concatenate_audio(audio_tuple_list):
+        audio_array = [audio_tuple_list[0][0]]
+        curr_start_time = 0
+        for i in range(len(audio_tuple_list)):
+            if i > 0:
+                curr_start_time += audio_tuple_list[i][1]
+                curr = audio_tuple_list[i][0]
+                audio_array.append(curr.set_start(curr_start_time))
+        mixed = mpy.CompositeAudioClip(audio_array)
+        return mixed
+
+    def main(list_of_text_tuples):  # Each tuple is (text, duration)
+        total_duration = 0
+        audio_tuples_list = []  # Each tuple is (audio clip, duration)
+        for i in range(len(list_of_text_tuples)):
+            total_duration += list_of_text_tuples[i][1]
+            curr_clip = VerticalVideoMaker.create_audio_clip(i)
+            audio_tuples_list.append(curr_clip, list_of_text_tuples[i][1])
+        compiled_audio = VerticalVideoMaker.concatenate_audio(audio_tuples_list)
         imported_video = VerticalVideoMaker.import_video_clip(
-            "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4"
+            "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4",
+            35,
+            total_duration,
         )
         footer_clip = VerticalVideoMaker.import_footer("temp_footer.png")
         all_text_clips = VerticalVideoMaker.concatenate_text_clips(list_of_text_tuples)
         compilation = VerticalVideoMaker.compile_video(
-            imported_video, footer_clip, all_text_clips
+            imported_video, footer_clip, all_text_clips, compiled_audio, total_duration
         )
         VerticalVideoMaker.export_video(compilation)
 

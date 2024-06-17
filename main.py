@@ -1,6 +1,7 @@
 from text_splitter import TextSplitter
 from selenium_scraper import RedditScraper
 from video_generator import VerticalVideoMaker
+from text_to_voice import TTSGenerator
 
 # This file will serve as a controller, attempting each of the tasks below
 
@@ -20,12 +21,16 @@ from video_generator import VerticalVideoMaker
 
 
 def main():
-    duration = 2  # This should be determined based off length of audio clips
     paragraphs = RedditScraper.main()
     text_pages = TextSplitter.text_splitter(paragraphs)
     list_of_text_tuples = []
-    for text in text_pages:
-        list_of_text_tuples.append((text, duration))
+    for i in range(len(text_pages)):
+        duration = TTSGenerator.single_speaker_model(
+            "tts_models/en/ljspeech/vits--neon",
+            i,
+            text_pages[i],
+        )
+        list_of_text_tuples.append((text_pages[i], duration))
     VerticalVideoMaker.main(list_of_text_tuples)
 
 
