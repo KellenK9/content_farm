@@ -133,7 +133,7 @@ class VerticalVideoMaker:
         final_clip.write_videofile("video_with_python.mp4", fps=10)
 
     def create_audio_clip(audio_path):
-        return mpy.AudioFileClip(f"{audio_path}.wav")
+        return mpy.AudioFileClip(f"temp_audio/{audio_path}.wav")
 
     def concatenate_audio(audio_tuple_list):  # Each tuple is (audio clip, duration)
         audio_array = [audio_tuple_list[0][0]]
