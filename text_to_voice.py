@@ -44,7 +44,7 @@ class TTSGenerator:
             text=text,
             file_path=f"{file_path}.wav",
         )
-        duration = librosa.get_duration(f"{file_path}.wav")
+        duration = librosa.get_duration(path=f"{file_path}.wav")
         return duration
 
     def tortoise_model(text):
