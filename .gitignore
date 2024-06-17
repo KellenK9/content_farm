@@ -1,2 +1,5 @@
 /content_farm_venv
 /__pycache__
+/text_to_voice.py
+/video_with_python.mp4
+*.wav

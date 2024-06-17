@@ -40,6 +40,7 @@ class TTSGenerator:
     def single_speaker_model(model_name, file_path, text):
         # Init TTS with the target model name and run
         tts = TTS(model_name=model_name)  # , gpu=True)
+        print(f"text for use is: {text}")
         tts.tts_to_file(
             text=text,
             file_path=f"{file_path}.wav",

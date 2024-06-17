@@ -12,51 +12,82 @@
 class TextSplitter:  # TODO: Needs tests
 
     # Define Global Variables
-    on_screen_char_limit = 270  # = max_chars_per_line * lines on screen
+    on_screen_char_limit = 180  # = max_chars_per_line (30) * (lines on screen (7) - 1)
 
     def text_splitter(list_of_paragraphs):
         final_list = []
-        list_of_sentences = []
+        final_list_no_empty_strings = []
         for paragraph in list_of_paragraphs:
-            list_of_sentences = TextSplitter.paragraph_splitter(paragraph)
-            for i in range(len(list_of_sentences)):
-                if len(list_of_sentences[i]) > TextSplitter.on_screen_char_limit:
-                    split_sentences = TextSplitter.sentence_splitter(
-                        list_of_sentences[i]
-                    )
-                    for sentence_piece in split_sentences:
-                        final_list.append(sentence_piece)
-                elif len(final_list) > 0:
-                    if (
-                        len(list_of_sentences[i]) + len(final_list[-1])
-                        < TextSplitter.on_screen_char_limit
-                    ):
-                        final_list[-1] = (
-                            f"{final_list[len(final_list) - 1]}{list_of_sentences[i]}"
+            if len(paragraph) > TextSplitter.on_screen_char_limit:
+                list_of_sentences = TextSplitter.paragraph_splitter(paragraph)
+                for i in range(len(list_of_sentences)):
+                    if len(list_of_sentences[i]) > TextSplitter.on_screen_char_limit:
+                        split_sentences = TextSplitter.sentence_splitter(
+                            list_of_sentences[i]
                         )
-                else:
-                    final_list.append(list_of_sentences[i])
-        return final_list
+                        for sentence_piece in split_sentences:
+                            final_list.append(sentence_piece)
+                    elif len(final_list) > 0:
+                        if (
+                            len(list_of_sentences[i]) + len(final_list[-1])
+                            < TextSplitter.on_screen_char_limit
+                        ):
+                            final_list[-1] = (
+                                f"{final_list[len(final_list) - 1]} {list_of_sentences[i]}"
+                            )
+                        else:
+                            final_list.append(list_of_sentences[i])
+                    else:
+                        final_list.append(list_of_sentences[i])
+            else:
+                final_list.append(paragraph)
+        for final in final_list:
+            if len(final) > 1:
+                final_list_no_empty_strings.append(final)
+        return final_list_no_empty_strings
 
     def paragraph_splitter(paragraph):
         list_of_sentences = paragraph.split(".")
+        for i in range(len(list_of_sentences)):
+            list_of_sentences[i] = f"{list_of_sentences[i]}."
         return list_of_sentences
 
-    def sentence_splitter(sentence):  # TODO: Needs a lot of work
+    def sentence_splitter(sentence):  # TODO: Needs a lot of work.
         final_splits = []
         still_splitting = [sentence]
         splitting_characters = ["!", ";", ":", " "]
+        still_splitting_temp = []
 
         for char in splitting_characters:
-            for chunk in still_splitting:
-                sentence_split = chunk.split(char)
-
-            still_splitting = []
-
-            for split in sentence_split:
-                if len(split) < TextSplitter.on_screen_char_limit:
-                    final_splits.append(split)
-                else:
-                    still_splitting.append(split)
+            if len(still_splitting) > 0:
+                for chunk in still_splitting:
+                    if len(chunk) > TextSplitter.on_screen_char_limit:
+                        if char in chunk:
+                            sentence_split = chunk.split(char)
+                            for i in range(len(sentence_split)):
+                                sentence_split[i] = f"{sentence_split[i]}{char}"
+                            for split in sentence_split:
+                                if len(split) < TextSplitter.on_screen_char_limit:
+                                    final_splits.append(split)
+                                else:
+                                    still_splitting_temp.append(split)
+                    else:  # Do we ever even hit this??
+                        final_splits.append(chunk)
+                still_splitting = still_splitting_temp
+                still_splitting_temp = []
 
         return final_splits
+
+    def test_sentence_splitter():
+        test_input = [
+            "Here is the first paragraph. It's made up of a few sentences, but should still be less than the on-screen limit of 190 characters.",
+            "Here is a second short paragraph."
+            "Here is a third short paragraph."
+            "Here is the fourth paragraph and boy is it a doozy. We want this paragraph to exceed the 190 character limit set for a single page. This will help test how it splits such paragraphs. This last sentence is what will pass the limit; can't wait to see the result",
+        ]
+        output_generated = TextSplitter.text_splitter(test_input)
+        for page_of_text in output_generated:
+            print(page_of_text)
+        print(len(output_generated))
+        # Try testing multiple periods in a row
+        # Change () to have higher importance than .
