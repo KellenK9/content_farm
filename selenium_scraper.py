@@ -35,13 +35,10 @@ class RedditScraper:
         path = RedditScraper.buildPath()
         driver = RedditScraper.launchBrowser(path)
         # Click Article
-        article = EC.presence_of_element_located(
-            (By.XPATH, '//*[@id="main-content"]/div[2]/article[1]')
-        )
+        article_xpath = '//*[@id="main-content"]/div[2]/shreddit-feed/article[1]'  # //*[@id="main-content"]/div[2]/article[1]')
+        article = EC.presence_of_element_located((By.XPATH, article_xpath))
         WebDriverWait(driver, RedditScraper.timeout).until(article)
-        article_element = driver.find_element(
-            By.XPATH, '//*[@id="main-content"]/div[2]/article[1]'
-        )
+        article_element = driver.find_element(By.XPATH, article_xpath)
         article_element.click()
         time.sleep(3)
         # Get Title
