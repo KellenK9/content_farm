@@ -62,22 +62,28 @@ class TTSGenerator:
     def test_models():
         # "<model_type>/<language>/<dataset>/<model_name>"
         model_names = [
-            # ("tts_models/en/multi-dataset/tortoise-v2", "tortoise"),  # 5835 seconds
-            # ("tts_models/en/ljspeech/tacotron2-DDC_ph", "tacotron2_DDC_ph"),  # 26 seconds
-            # ("tts_models/en/ljspeech/glow-tts", "glow"),  # 115 seconds
-            # ("tts_models/en/blizzard2013/capacitron-t2-c150_v2", "capacitron2"), # 166 seconds
-            # ("tts_models/en/ljspeech/overflow", "overflow"),  # 96 seconds
-            # ("tts_models/en/ljspeech/vits", "vits"),  # 26 seconds
-            # ("tts_models/en/ljspeech/speedy-speech", "speedy_speech"),  # 26 seconds
-            # ("tts_models/en/ljspeech/neural_hmm", "neural"),  # 47 seconds
-            # ("tts_models/en/jenny/jenny", "jenny"),  # 421 seconds
-            # ("tts_models/en/sam/tacotron-DDC", "tacotron_sam"),  # 252 seconds
-            # ("tts_models/en/ljspeech/vits--neon", "vits_neon"),  # 68 seconds
-            # ("tts_models/en/ljspeech/tacotron2-DDC", "tacotron2_DDC"),  # 58 seconds
-            # ("tts_models/en/ljspeech/tacotron2-DCA", "tacotron2_DCA"),  # 66 seconds
-            # ("tts_models/en/ek1/tacotron2", "tacotron_ek1"),  # 1897 seconds
-            # ("tts_models/en/vctk/vits", "vits_by_vctk"), multi-speaker
-            # ("tts_models/en/vctk/fast_pitch", "fast_pitch"), multi-speaker
+            ("tts_models/en/multi-dataset/tortoise-v2", "tortoise"),  # 5835 seconds
+            (
+                "tts_models/en/ljspeech/tacotron2-DDC_ph",
+                "tacotron2_DDC_ph",
+            ),  # 26 seconds
+            ("tts_models/en/ljspeech/glow-tts", "glow"),  # 115 seconds
+            (
+                "tts_models/en/blizzard2013/capacitron-t2-c150_v2",
+                "capacitron2",
+            ),  # 166 seconds
+            ("tts_models/en/ljspeech/overflow", "overflow"),  # 96 seconds
+            ("tts_models/en/ljspeech/vits", "vits"),  # 26 seconds
+            ("tts_models/en/ljspeech/speedy-speech", "speedy_speech"),  # 26 seconds
+            ("tts_models/en/ljspeech/neural_hmm", "neural"),  # 47 seconds
+            ("tts_models/en/jenny/jenny", "jenny"),  # 421 seconds
+            ("tts_models/en/sam/tacotron-DDC", "tacotron_sam"),  # 252 seconds
+            ("tts_models/en/ljspeech/vits--neon", "vits_neon"),  # 68 seconds
+            ("tts_models/en/ljspeech/tacotron2-DDC", "tacotron2_DDC"),  # 58 seconds
+            ("tts_models/en/ljspeech/tacotron2-DCA", "tacotron2_DCA"),  # 66 seconds
+            ("tts_models/en/ek1/tacotron2", "tacotron_ek1"),  # 1897 seconds
+            ("tts_models/en/vctk/vits", "vits_by_vctk"),  # multi-speaker
+            ("tts_models/en/vctk/fast_pitch", "fast_pitch"),  # multi-speaker
         ]
         durations = []
 
