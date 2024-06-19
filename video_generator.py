@@ -137,22 +137,22 @@ class VerticalVideoMaker:
 
     def concatenate_audio(audio_tuple_list):  # Each tuple is (audio clip, duration)
         audio_array = [audio_tuple_list[0][0]]
-        curr_start_time = 0
+        curr_start_time = audio_tuple_list[0][1]
         for i in range(len(audio_tuple_list)):
             if i > 0:
-                curr_start_time += audio_tuple_list[i][1]
                 curr = audio_tuple_list[i][0]
                 audio_array.append(curr.set_start(curr_start_time))
+                curr_start_time += audio_tuple_list[i][1]
         mixed = mpy.CompositeAudioClip(audio_array)
         return mixed
 
-    def main(list_of_text_tuples):  # Each tuple is (text, duration)
+    def main(list_of_text_durations):
         total_duration = 0
         audio_tuples_list = []  # Each tuple is (audio clip, duration)
-        for i in range(len(list_of_text_tuples)):
-            total_duration += list_of_text_tuples[i][1]
+        for i in range(len(list_of_text_durations)):
+            total_duration += list_of_text_durations[i]
             curr_clip = VerticalVideoMaker.create_audio_clip(i)
-            audio_tuples_list.append((curr_clip, list_of_text_tuples[i][1]))
+            audio_tuples_list.append((curr_clip, list_of_text_durations[i]))
         compiled_audio = VerticalVideoMaker.concatenate_audio(audio_tuples_list)
         imported_video = VerticalVideoMaker.import_video_clip(
             "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4",
