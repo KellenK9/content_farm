@@ -9,7 +9,7 @@ class VerticalVideoMaker:
     WHITE = (255, 255, 255)
     BLACK = (0, 0, 0)
     SCREEN_SIZE = (1080, 1920)
-    VERTICAL_MARGIN = 120
+    VERTICAL_MARGIN = 240
     FOOTER_HEIGHT = 60
     max_chars_per_line = 30
 
@@ -47,6 +47,8 @@ class VerticalVideoMaker:
 
     def add_text(text, start_time, duration):
         text_lines = VerticalVideoMaker.split_text_into_lines(text)
+        num_lines = len(text_lines)
+        vertical_offset = 50 * (6 - num_lines)
         text_clips = []
         vertical_line_height = 100
         for i in range(len(text_lines)):
@@ -64,6 +66,7 @@ class VerticalVideoMaker:
                         (
                             "center",
                             VerticalVideoMaker.VERTICAL_MARGIN
+                            + vertical_offset
                             + (vertical_line_height * i),
                         )
                     )
