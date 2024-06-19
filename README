@@ -7,3 +7,15 @@ Finish by rebooting the system
 
 Then, before running commands run the line below:
 Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
+
+
+Future Upgrades:
+-Train own TTS model
+-Run MoviePY and TTS on GPU with CUDA
+-Add () to text splitter
+
+Next Steps:
+-Improve design of text portion of video
+-Auto Upload videos to YouTube and TikTok
+-Generate Icon and Banner for YouTube and TikTok accounts
+-Create YouTube and TikTok accounts
