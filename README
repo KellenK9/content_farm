@@ -12,10 +12,13 @@ Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
 Future Upgrades:
 -Train own TTS model
 -Run MoviePY and TTS on GPU with CUDA
--Add () to text splitter
+-Add () and "" to text splitter
+-Account for sets of multiple periods, especially ... in text splitter
+-Account for periods between () and "" in text splitter
+-Get TTS to pause a little for ()
 
 Next Steps:
--Improve design of text portion of video
+-Improve design of text portion of video, center text vertically, white text on black background
 -Auto Upload videos to YouTube and TikTok
 -Generate Icon and Banner for YouTube and TikTok accounts
 -Create YouTube and TikTok accounts
