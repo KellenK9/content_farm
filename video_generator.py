@@ -7,6 +7,7 @@ class VerticalVideoMaker:
 
     # Set global variables
     WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
     SCREEN_SIZE = (1080, 1920)
     VERTICAL_MARGIN = 120
     FOOTER_HEIGHT = 60
@@ -55,7 +56,7 @@ class VerticalVideoMaker:
                     mpy.TextClip(
                         text,
                         font="Charter-bold",
-                        color="RoyalBlue4",
+                        color="White",
                         kerning=4,
                         fontsize=60,
                     )
@@ -123,7 +124,7 @@ class VerticalVideoMaker:
                 clips=clips,
                 size=VerticalVideoMaker.SCREEN_SIZE,
             )
-            .on_color(color=VerticalVideoMaker.WHITE, col_opacity=1)
+            .on_color(color=VerticalVideoMaker.BLACK, col_opacity=1)
             .set_duration(total_duration)
             .set_audio(compiled_audio)
         )  # .set_audio(compiled_audio)
