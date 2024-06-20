@@ -16,6 +16,8 @@ Future Upgrades:
 -Account for sets of multiple periods, especially ... in text splitter
 -Account for periods between () and "" in text splitter
 -Get TTS to pause a little for ()
+-Allow mixing of original video's audio with TTS generated audio
+-Add other video types
 
 Next Steps:
 -Text Splitter is removing parts of story?
@@ -23,4 +25,7 @@ Next Steps:
 -Generate Icon and Banner for YouTube and TikTok accounts
 -Create YouTube and TikTok accounts
 -Wikipedia Scraper or other sites
+-Add image scraper from Google Images or elsewhere
 -Integrate AI content generation instead of scraping
+-Add ability to download YouTube videos when provided URL
+-Create webpage to serve as UI for process
