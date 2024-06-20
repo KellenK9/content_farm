@@ -36,7 +36,7 @@ def main():
     curr_time = time.time()
     for i in range(len(text_pages)):
         duration = TTSGenerator.single_speaker_model(
-            "tts_models/en/ljspeech/vits--neon",
+            "tts_models/en/ljspeech/overflow",
             i,
             text_pages[i],
         )
