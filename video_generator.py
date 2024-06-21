@@ -3,30 +3,13 @@ from moviepy.video.tools.segmenting import findObjects
 import moviepy.video.fx.all as vfx
 
 
-class VerticalVideoMaker:
-
-    # Set global variables
-    WHITE = (255, 255, 255)
-    BLACK = (0, 0, 0)
-    SCREEN_SIZE = (1080, 1920)
-    VERTICAL_MARGIN = 240
-    FOOTER_HEIGHT = 60
-    max_chars_per_line = 30
-
-    def add_logo():
-        SB_LOGO_PATH = "./static/StackBuildersLogo.jpg"
-
-        sb_logo = (
-            mpy.ImageClip(SB_LOGO_PATH).set_position(("center", 0)).resize(width=200)
-        )
-        return sb_logo
-
-    def split_text_into_lines(text):
+class VideoMakerFunctions:
+    def split_text_into_lines(text, max_chars_per_line):
         text_lines = []
         words = text.split()
         curr_phrase = ""
         for i in range(len(words)):
-            if len(f"{curr_phrase} {words[i]}") < VerticalVideoMaker.max_chars_per_line:
+            if len(f"{curr_phrase} {words[i]}") < max_chars_per_line:
                 if len(curr_phrase) == 0:  # Gets rid of initial space
                     curr_phrase = f"{words[i]}"
                 else:
@@ -45,8 +28,8 @@ class VerticalVideoMaker:
                     curr_phrase = f"{words[i]}"
         return text_lines
 
-    def add_text(text, start_time, duration):
-        text_lines = VerticalVideoMaker.split_text_into_lines(text)
+    def add_text(text, start_time, duration, max_chars_per_line, vertical_margin):
+        text_lines = VideoMakerFunctions.split_text_into_lines(text, max_chars_per_line)
         num_lines = len(text_lines)
         vertical_offset = 50 * (6 - num_lines)
         text_clips = []
@@ -65,7 +48,7 @@ class VerticalVideoMaker:
                     .set_position(
                         (
                             "center",
-                            VerticalVideoMaker.VERTICAL_MARGIN
+                            vertical_margin
                             + vertical_offset
                             + (vertical_line_height * i),
                         )
@@ -76,19 +59,47 @@ class VerticalVideoMaker:
                 text_clips.append(txt_clip)
         return text_clips
 
-    def concatenate_text_clips(list_of_text_tuples):
+    def concatenate_text_clips(
+        list_of_text_tuples, vertical_margin, max_chars_per_line
+    ):
         # Each tuple should be formatted as (text, duration)
         text_clips = []
         current_start = 0
         buffer = 0
         for text_tuple in list_of_text_tuples:
-            curr_text_clips = VerticalVideoMaker.add_text(
-                text_tuple[0], current_start, text_tuple[1]
+            curr_text_clips = VideoMakerFunctions.add_text(
+                text_tuple[0],
+                current_start,
+                text_tuple[1],
+                max_chars_per_line,
+                vertical_margin,
             )
             for text_clip in curr_text_clips:
                 text_clips.append(text_clip)
             current_start = current_start + text_tuple[1] + buffer
         return text_clips
+
+    def export_video(final_clip, export_name, fps):
+        final_clip.write_videofile(f"h{export_name}.mp4", fps=fps)
+
+
+class VerticalVideoMaker:
+
+    # Set global variables
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    SCREEN_SIZE = (1080, 1920)
+    VERTICAL_MARGIN = 240
+    FOOTER_HEIGHT = 60
+    max_chars_per_line = 30
+
+    def add_logo():
+        SB_LOGO_PATH = "./static/StackBuildersLogo.jpg"
+
+        sb_logo = (
+            mpy.ImageClip(SB_LOGO_PATH).set_position(("center", 0)).resize(width=200)
+        )
+        return sb_logo
 
     def import_video_clip(file_location, start_time, duration):
         clip = mpy.VideoFileClip(file_location)
@@ -133,9 +144,6 @@ class VerticalVideoMaker:
         )
         return final_clip
 
-    def export_video(final_clip):
-        final_clip.write_videofile("video_with_python.mp4", fps=10)
-
     def create_audio_clip(audio_path):
         return mpy.AudioFileClip(f"{audio_path}.wav")
 
@@ -163,11 +171,15 @@ class VerticalVideoMaker:
             total_duration,
         )
         footer_clip = VerticalVideoMaker.import_footer("temp_footer.png")
-        all_text_clips = VerticalVideoMaker.concatenate_text_clips(list_of_text_tuples)
+        all_text_clips = VideoMakerFunctions.concatenate_text_clips(
+            list_of_text_tuples,
+            VerticalVideoMaker.VERTICAL_MARGIN,
+            VerticalVideoMaker.max_chars_per_line,
+        )
         compilation = VerticalVideoMaker.compile_video(
             imported_video, footer_clip, all_text_clips, compiled_audio, total_duration
         )
-        VerticalVideoMaker.export_video(compilation)
+        VideoMakerFunctions.export_video(compilation, "vertical_lyric_video", 10)
 
 
 class HorizontalVideoMaker:
@@ -198,25 +210,22 @@ class HorizontalVideoMaker:
         )
         return final_clip
 
-    def export_video(final_clip):
-        final_clip.write_videofile("horizontal_lyric_video.mp4", fps=10)
-
     def main(
         list_of_text_tuples, audio_path
     ):  # Each tuple should be formatted as (text, duration)
         total_duration = 0
         for i in range(len(list_of_text_tuples)):
             total_duration += list_of_text_tuples[i][1]
-        all_text_clips = VerticalVideoMaker.concatenate_text_clips(list_of_text_tuples)
+        all_text_clips = VideoMakerFunctions.concatenate_text_clips(list_of_text_tuples)
         music_audio = HorizontalVideoMaker.import_audio(audio_path)
         compilation = HorizontalVideoMaker.compile_video(
             all_text_clips, music_audio, total_duration
         )
-        HorizontalVideoMaker.export_video(compilation)
+        VideoMakerFunctions.export_video(compilation, "horizontal_lyric_video", 10)
 
 
 class LyricVideoMaker:
     # Should create both a horizontal and vertical video when provided lyric pages, music, and splits for when to move to the next lyric page
     def create_both_video_formats(list_of_text_tuples, audio_path):
-        horizontal_video = HorizontalVideoMaker.main(list_of_text_tuples, audio_path)
-        vertical_video = VerticalVideoMaker.main()
+        HorizontalVideoMaker.main(list_of_text_tuples, audio_path)
+        VerticalVideoMaker.main(list_of_text_tuples, audio_path)
