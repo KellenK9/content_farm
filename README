@@ -20,6 +20,7 @@ Future Upgrades:
 -Add other video types
 
 Next Steps:
+-Finish Lyric Scraper
 -Text Splitter is removing parts of story?!?!?
 -Auto Upload videos to YouTube and TikTok
 -Generate Icon and Banner for YouTube and TikTok accounts
@@ -27,5 +28,4 @@ Next Steps:
 -Wikipedia Scraper or other sites
 -Add image scraper from Google Images or elsewhere
 -Integrate AI content generation instead of scraping
--Add ability to download YouTube videos when provided URL
 -Create webpage to serve as UI for process
