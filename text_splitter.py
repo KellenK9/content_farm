@@ -89,3 +89,4 @@ class TextSplitter:  # TODO: Needs tests
         print(len(output_generated))
         # Try testing multiple periods in a row
         # Change () to have higher importance than .
+        # Check logic for paragraphs that are too large with not breaking chars getting omitted
