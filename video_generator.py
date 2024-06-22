@@ -82,6 +82,9 @@ class VideoMakerFunctions:
     def export_video(final_clip, export_name, fps):
         final_clip.write_videofile(f"h{export_name}.mp4", fps=fps)
 
+    def import_audio(audio_path):
+        return mpy.AudioFileClip(audio_path)
+
 
 class VerticalVideoMaker:
 
@@ -144,6 +147,21 @@ class VerticalVideoMaker:
         )
         return final_clip
 
+    def compile_lyric_video(text_clips, compiled_audio, total_duration):
+        clips = []
+        for text_clip in text_clips:
+            clips.append(text_clip)
+        final_clip = (
+            mpy.CompositeVideoClip(
+                clips=clips,
+                size=VerticalVideoMaker.SCREEN_SIZE,
+            )
+            .on_color(color=HorizontalVideoMaker.BLACK, col_opacity=1)
+            .set_duration(total_duration)
+            .set_audio(compiled_audio)
+        )
+        return final_clip
+
     def create_audio_clip(audio_path):
         return mpy.AudioFileClip(f"{audio_path}.wav")
 
@@ -157,7 +175,9 @@ class VerticalVideoMaker:
         mixed = mpy.CompositeAudioClip(audio_array)
         return mixed
 
-    def main(list_of_text_tuples):  # Each tuple should be formatted as (text, duration)
+    def main_story_format(
+        list_of_text_tuples,
+    ):  # Each tuple should be formatted as (text, duration)
         total_duration = 0
         audio_tuples_list = []  # Each tuple is (audio clip, duration)
         for i in range(len(list_of_text_tuples)):
@@ -181,6 +201,23 @@ class VerticalVideoMaker:
         )
         VideoMakerFunctions.export_video(compilation, "vertical_lyric_video", 10)
 
+    def main_lyric_format(
+        list_of_text_tuples, audio_path
+    ):  # Each tuple should be formatted as (text, duration)
+        total_duration = 0
+        for i in range(len(list_of_text_tuples)):
+            total_duration += list_of_text_tuples[i][1]
+        all_text_clips = VideoMakerFunctions.concatenate_text_clips(
+            list_of_text_tuples,
+            VerticalVideoMaker.VERTICAL_MARGIN,
+            VerticalVideoMaker.max_chars_per_line,
+        )
+        music_audio = VideoMakerFunctions.import_audio(audio_path)
+        compilation = VerticalVideoMaker.compile_lyric_video(
+            all_text_clips, music_audio, total_duration
+        )
+        VideoMakerFunctions.export_video(compilation, "vertical_lyric_video", 10)
+
 
 class HorizontalVideoMaker:
 
@@ -191,9 +228,6 @@ class HorizontalVideoMaker:
     VERTICAL_MARGIN = 240
     FOOTER_HEIGHT = 60
     max_chars_per_line = 70
-
-    def import_audio(audio_path):
-        return mpy.AudioFileClip(audio_path)
 
     def compile_video(text_clips, compiled_audio, total_duration):
         clips = []
@@ -217,7 +251,7 @@ class HorizontalVideoMaker:
         for i in range(len(list_of_text_tuples)):
             total_duration += list_of_text_tuples[i][1]
         all_text_clips = VideoMakerFunctions.concatenate_text_clips(list_of_text_tuples)
-        music_audio = HorizontalVideoMaker.import_audio(audio_path)
+        music_audio = VideoMakerFunctions.import_audio(audio_path)
         compilation = HorizontalVideoMaker.compile_video(
             all_text_clips, music_audio, total_duration
         )
@@ -228,4 +262,4 @@ class LyricVideoMaker:
     # Should create both a horizontal and vertical video when provided lyric pages, music, and splits for when to move to the next lyric page
     def create_both_video_formats(list_of_text_tuples, audio_path):
         HorizontalVideoMaker.main(list_of_text_tuples, audio_path)
-        VerticalVideoMaker.main(list_of_text_tuples, audio_path)
+        VerticalVideoMaker.main_lyric_format(list_of_text_tuples, audio_path)

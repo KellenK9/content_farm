@@ -45,7 +45,7 @@ def create_reddit_story_video():
     times_to_complete.append(("Text To Speech with CoquiTTS", time.time() - curr_time))
 
     curr_time = time.time()
-    VerticalVideoMaker.main(list_of_text_tuples)
+    VerticalVideoMaker.main_story_format(list_of_text_tuples)
     times_to_complete.append(("Video Generation with MoviePY", time.time() - curr_time))
 
     for tuple in times_to_complete:
