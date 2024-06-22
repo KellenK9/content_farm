@@ -318,7 +318,7 @@ class HorizontalVideoMaker:
         final_clip = (
             mpy.CompositeVideoClip(
                 clips=clips,
-                size=VerticalVideoMaker.SCREEN_SIZE,
+                size=HorizontalVideoMaker.SCREEN_SIZE,
             )
             .on_color(color=HorizontalVideoMaker.BLACK, col_opacity=1)
             .set_duration(total_duration)
@@ -331,8 +331,8 @@ class HorizontalVideoMaker:
     ):  # Each tuple should be formatted as (text, duration)
         all_text_clips = VideoMakerFunctions.concatenate_text_clips_lyrics(
             list_of_text_tuples,
-            VerticalVideoMaker.VERTICAL_MARGIN,
-            VerticalVideoMaker.max_chars_per_line,
+            HorizontalVideoMaker.VERTICAL_MARGIN,
+            HorizontalVideoMaker.max_chars_per_line,
             title_page_duration,
             song_title,
             artist_name,
