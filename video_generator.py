@@ -227,12 +227,9 @@ class VerticalVideoMaker:
         return final_clip
 
     def compile_lyric_video(text_clips, compiled_audio, total_duration):
-        clips = []
-        for text_clip in text_clips:
-            clips.append(text_clip)
         final_clip = (
             mpy.CompositeVideoClip(
-                clips=clips,
+                clips=text_clips,
                 size=VerticalVideoMaker.SCREEN_SIZE,
             )
             .on_color(color=HorizontalVideoMaker.BLACK, col_opacity=1)
@@ -312,12 +309,9 @@ class HorizontalVideoMaker:
     max_chars_per_line = 70
 
     def compile_video(text_clips, compiled_audio, total_duration):
-        clips = []
-        for text_clip in text_clips:
-            clips.append(text_clip)
         final_clip = (
             mpy.CompositeVideoClip(
-                clips=clips,
+                clips=text_clips,
                 size=HorizontalVideoMaker.SCREEN_SIZE,
             )
             .on_color(color=HorizontalVideoMaker.BLACK, col_opacity=1)
