@@ -1,6 +1,6 @@
 import moviepy.editor as mpy
-from moviepy.video.tools.segmenting import findObjects
 import moviepy.video.fx.all as vfx
+import time
 
 
 class VideoMakerFunctions:
@@ -358,3 +358,47 @@ class LyricVideoMaker:
             song_title,
             artist_name,
         )
+
+
+class EncodingTester:
+    # Set global variables
+    WHITE = (255, 255, 255)
+    BLACK = (0, 0, 0)
+    SCREEN_SIZE = (1080, 1920)
+    VERTICAL_MARGIN = 240
+    FOOTER_HEIGHT = 60
+    max_chars_per_line = 30
+    list_of_encodings = []
+
+    def compile_lyric_video(imported_video, total_duration):
+        final_clip = (
+            mpy.CompositeVideoClip(
+                clips=imported_video,
+                size=VerticalVideoMaker.SCREEN_SIZE,
+            )
+            .on_color(color=VerticalVideoMaker.BLACK, col_opacity=1)
+            .set_duration(total_duration)
+        )
+        return final_clip
+
+    def main_lyric_format():
+        total_duration = 10
+        imported_video = VerticalVideoMaker.import_video_clip(
+            "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4",
+            35,
+            total_duration,
+        )
+        compilation = VerticalVideoMaker.compile_lyric_video(
+            imported_video, total_duration
+        )
+        times_to_complete = []
+        for encoding in EncodingTester.list_of_encodings:
+            curr_time = time.time()
+            compilation.write_videofile("test.mp4", fps=10, codec=encoding)
+            times_to_complete.append((encoding, time.time() - curr_time))
+
+        for tuple in times_to_complete:
+            print(f"{tuple[0]} took {tuple[1]} seconds.")
+
+
+EncodingTester.main_lyric_format()
