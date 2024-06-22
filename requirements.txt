@@ -14,3 +14,4 @@ setuptools
 wheel
 nvidia-cuda-runtime-cu12
 pytube
+ffmpeg
