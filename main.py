@@ -58,7 +58,7 @@ def create_lyric_video():
     temp_audio_path = "./temp_audio/drake-push-ups-audio"
 
     curr_time = time.time()
-    scraped_data = LyricScraperGenius.main()
+    scraped_data = LyricScraperGenius.main(artist="Drake", song="push-ups")
     song_title = scraped_data[0]
     artist_name = scraped_data[1]
     paragraphs = scraped_data[2]
@@ -76,11 +76,68 @@ def create_lyric_video():
     times_to_complete.append(("Audio Downloading with PyTube", time.time() - curr_time))
 
     # Generate durations for each page of lyrics that corresponds to audio. Must be done manually.
-    manual_page_duration_array = []
+    manual_page_duration_array = [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+    ]
+    for i in range(len(text_pages)):
+        list_of_text_tuples.append((text_pages[i], manual_page_duration_array[i]))
+    title_page_duration = 8
 
     curr_time = time.time()
-    LyricVideoMaker.main(list_of_text_tuples, temp_audio_path)
+    LyricVideoMaker.main(
+        list_of_text_tuples,
+        temp_audio_path,
+        title_page_duration,
+        song_title,
+        artist_name,
+    )
     times_to_complete.append(("Video Generation with MoviePY", time.time() - curr_time))
 
     for tuple in times_to_complete:
         print(f"{tuple[0]} took {tuple[1]} seconds.")
+
+
+create_lyric_video()

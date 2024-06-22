@@ -69,10 +69,10 @@ class LyricScraperGenius:
     # Set Global Variables
     timeout = 10
 
-    def buildPath():
+    def buildPath(artist, song):
         path_start = "https://www.genius.com/"
-        artist = "Drake"  # Artist name should have the first letter capital and the rest lowercase with dashes instead of spaces
-        song = "push-ups"  # Song name should be lowercase with dashes instead of spaces
+        # Artist name should have the first letter capital and the rest lowercase with dashes instead of spaces
+        # Song name should be lowercase with dashes instead of spaces
         path = f"{path_start}{artist}-{song}-lyrics"
         return path
 
@@ -84,9 +84,9 @@ class LyricScraperGenius:
         driver.get(path)
         return driver
 
-    def main():
+    def main(artist, song):
         print("driver")
-        path = LyricScraperGenius.buildPath()
+        path = LyricScraperGenius.buildPath(artist, song)
         print("built path")
         driver = LyricScraperGenius.launchBrowser(path)
         print("got driver")
