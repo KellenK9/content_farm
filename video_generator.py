@@ -306,7 +306,7 @@ class HorizontalVideoMaker:
     SCREEN_SIZE = (1920, 1080)
     VERTICAL_MARGIN = 240
     FOOTER_HEIGHT = 60
-    max_chars_per_line = 70
+    max_chars_per_line = 50
 
     def compile_video(text_clips, compiled_audio, total_duration):
         final_clip = (
