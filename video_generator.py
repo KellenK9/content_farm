@@ -402,7 +402,7 @@ class EncodingTester:
     def compile_lyric_video(imported_video, total_duration):
         final_clip = (
             mpy.CompositeVideoClip(
-                clips=imported_video,
+                clips=[imported_video],
                 size=VerticalVideoMaker.SCREEN_SIZE,
             )
             .on_color(color=VerticalVideoMaker.BLACK, col_opacity=1)
