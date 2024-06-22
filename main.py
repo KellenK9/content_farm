@@ -61,8 +61,16 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
     paragraphs = LyricScraperSing.main(lyric_link)
     times_to_complete.append(("Lyric Scraper with Selenium", time.time() - curr_time))
 
+    # Lets Sing It site that is currently being used for lyric scraping includes natural line breaks but no periods
+    # The lack of periods messes with my text splitter and I end up with paragraphs completely omitted.
+    lines = []
+    for paragraph in paragraphs:
+        curr_lines = paragraph.splitlines()
+        for line in curr_lines:
+            lines.append(line)
+
     curr_time = time.time()
-    text_pages = TextSplitter.text_splitter(paragraphs)
+    text_pages = TextSplitter.text_splitter(lines)
     times_to_complete.append(("Text Splitter with Python", time.time() - curr_time))
 
     curr_time = time.time()
