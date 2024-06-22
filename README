@@ -29,3 +29,22 @@ Next Steps:
 -Add image scraper from Google Images or elsewhere
 -Integrate AI content generation instead of scraping
 -Create webpage to serve as UI for process
+
+
+
+Video Formats:
+
+Story Format:
+Includes a banner at bottom of video with stock video footage filling the lower half of screen.
+Top half of screen includes text that's being read by TTS
+Vertical.
+
+Lyric Format:
+Includes lyrics on screen in pages with music in background. Pages flip according to music
+First page has song title followed by Artist
+Can be created in Vertical or Horizontal Format. Pages will differ between the two since Horizontal allows more text on screen at once
+
+Slideshow Format:
+Features images and video displayed using the entire screen. Images move slightly to catch the eye.
+Text is placed on top of slideshow and read by TTS.
+Vertical.
