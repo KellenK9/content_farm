@@ -21,10 +21,11 @@ Future Upgrades:
 -Get TTS to pause a little for ()
 -Allow mixing of original video's audio with TTS generated audio
 -Add other video types
+-Test speed/size of different audio and video formats
 
 Next Steps:
 -Implement manual lyric splitter to determine page durations
--Text Splitter is removing parts of story?!?!?
+-Text Splitter is removing parts of story?!?!? Write tests for text splitter and fix logic
 -Auto Upload videos to YouTube and TikTok
 -Generate Icon and Banner for YouTube and TikTok accounts
 -Create YouTube and TikTok accounts
