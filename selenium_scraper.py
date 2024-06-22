@@ -65,7 +65,7 @@ class RedditScraper:
         return paragraphs_text
 
 
-class LyricScraperGenius:
+class LyricScraperGenius:  # Genius has anti-scraping measures implemented
     # Set Global Variables
     timeout = 10
 
@@ -92,26 +92,29 @@ class LyricScraperGenius:
         print("got driver")
 
         # Get Body Text
-        body = EC.presence_of_element_located((By.ID, "lyrics-root-pin-spacer"))
+        body = EC.presence_of_element_located(
+            By.CLASS_NAME, "ReferentFragmentdesktop__Highlight-sc-110r0d9-1"
+        )
         print("waiting")
         WebDriverWait(driver, LyricScraperGenius.timeout).until(body)
         print("done waiting")
-        song_title = driver.find_element(
-            By.CLASS_NAME, "SongHeaderdesktop__HiddenMask-sc-1effuo1-11"
-        )
-        artist_name = driver.find_element(
-            By.CLASS_NAME, "HeaderArtistAndTracklistdesktop__Artist-sc-4vdeb8-1"
-        )
+        # song_title = driver.find_element(
+        #    By.CLASS_NAME, "SongHeaderdesktop__HiddenMask-sc-1effuo1-11"
+        # )
+        # artist_name = driver.find_element(
+        #    By.CLASS_NAME, "HeaderArtistAndTracklistdesktop__Artist-sc-4vdeb8-1"
+        # )
         paragraphs = driver.find_elements(
             By.CLASS_NAME, "ReferentFragmentdesktop__Highlight-sc-110r0d9-1"
         )
+        driver.quit()
         print(len(paragraphs))
         paragraphs_text = []
         for p in paragraphs:
             paragraphs_text.append(p.text)
             print(p.text)
 
-        return [song_title.text, artist_name.text, paragraphs_text]
+        # return [song_title.text, artist_name.text, paragraphs_text]
 
 
 class LyricScraperAZ:
@@ -151,5 +154,32 @@ class LyricScraperAZ:
         for p in paragraphs:
             paragraphs_text.append(p.text)
             print(p.text)
+
+        return paragraphs_text
+
+
+class LyricScraperSing:
+    # Set Global Variables
+    timeout = 10
+
+    def launchBrowser(path):
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--start-maximized")
+        driver = webdriver.Chrome(options=chrome_options)
+
+        driver.get(path)
+        return driver
+
+    def main(path):
+        driver = LyricScraperSing.launchBrowser(path)
+
+        # Get Body Text
+        body = EC.presence_of_element_located((By.CLASS_NAME, "contentbox"))
+        WebDriverWait(driver, LyricScraperSing.timeout).until(body)
+        paragraphs = driver.find_elements(By.CLASS_NAME, "lyrics_part_text")
+        driver.quit()
+        paragraphs_text = []
+        for p in paragraphs:
+            paragraphs_text.append(p.text)
 
         return paragraphs_text
