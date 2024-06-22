@@ -53,9 +53,14 @@ def create_reddit_story_video():
 
 
 def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
-    list_of_text_tuples = []
+    list_of_text_tuples_horizontal = []
+    list_of_text_tuples_vertical = []
     times_to_complete = []
     temp_audio_path = "./temp_audio/drake-push-ups-audio"
+    horizontal_max_chars_per_line = 50
+    horizontal_max_lines_on_screen = 7
+    vertical_max_chars_per_line = 30
+    vertical_max_lines_on_screen = 10
 
     curr_time = time.time()
     paragraphs = LyricScraperSing.main(lyric_link)
@@ -70,7 +75,12 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
             lines.append(line)
 
     curr_time = time.time()
-    text_pages = TextSplitter.text_splitter(lines)
+    text_pages_horizontal = TextSplitter.lyric_text_splitter(
+        lines, horizontal_max_chars_per_line, horizontal_max_lines_on_screen
+    )
+    text_pages_vertical = TextSplitter.lyric_text_splitter(
+        lines, vertical_max_chars_per_line, horizontal_max_lines_on_screen
+    )
     times_to_complete.append(("Text Splitter with Python", time.time() - curr_time))
 
     curr_time = time.time()
@@ -81,7 +91,7 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
     times_to_complete.append(("Audio Downloading with PyTube", time.time() - curr_time))
 
     # Generate durations for each page of lyrics that corresponds to audio. Must be done manually.
-    manual_page_duration_array = [
+    manual_page_duration_array_horizontal = [
         5,
         5,
         5,
@@ -179,13 +189,27 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
         5,
         5,
     ]
-    for i in range(len(text_pages)):
-        list_of_text_tuples.append((text_pages[i], manual_page_duration_array[i]))
+    manual_page_duration_array_vertical = manual_page_duration_array_horizontal
+    for i in range(len(text_pages_horizontal)):
+        list_of_text_tuples_horizontal.append(
+            (text_pages_horizontal[i], manual_page_duration_array_horizontal[i])
+        )
+    for i in range(len(text_pages_vertical)):
+        list_of_text_tuples_vertical.append(
+            (text_pages_vertical[i], manual_page_duration_array_vertical[i])
+        )
     title_page_duration = 8
 
     curr_time = time.time()
-    LyricVideoMaker.create_both_video_formats(
-        list_of_text_tuples,
+    HorizontalVideoMaker.main(
+        list_of_text_tuples_horizontal,
+        f"{temp_audio_path}/{song_title}.mp4",
+        title_page_duration,
+        song_title,
+        artist_name,
+    )
+    VerticalVideoMaker.main_lyric_format(
+        list_of_text_tuples_vertical,
         f"{temp_audio_path}/{song_title}.mp4",
         title_page_duration,
         song_title,

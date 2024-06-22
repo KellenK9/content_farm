@@ -76,6 +76,28 @@ class TextSplitter:  # TODO: Needs tests
 
         return final_splits
 
+    def lyric_text_splitter(
+        list_of_lines, max_chars_per_line, max_lines_on_screen
+    ):  # Key difference for lyrics is that lines are coming in instead of paragraphs
+        list_of_text_pages = []  # Each element in list is a list of sentences
+        curr_text_page = []
+        for line in list_of_lines:
+            if len(line) <= max_chars_per_line:
+                if len(curr_text_page) == max_lines_on_screen:
+                    list_of_text_pages.append(curr_text_page)
+                    curr_text_page = []
+                curr_text_page.append(line)
+            else:
+                split_lines = TextSplitter.sentence_splitter(line)
+                if len(curr_text_page) + len(split_lines) >= max_lines_on_screen:
+                    list_of_text_pages.append(curr_text_page)
+                    curr_text_page = []
+                for split in split_lines:
+                    curr_text_page.append(split)
+        if len(curr_text_page) > 0:
+            list_of_text_pages.append(curr_text_page)
+        return list_of_text_pages
+
     def test_sentence_splitter():
         test_input = [
             "Here is the first paragraph. It's made up of a few sentences, but should still be less than the on-screen limit of 190 characters.",

@@ -79,6 +79,36 @@ class VideoMakerFunctions:
             current_start = current_start + text_tuple[1] + buffer
         return text_clips
 
+    def add_text_lyrics(text_lines, start_time, duration, vertical_margin):
+        num_lines = len(text_lines)
+        vertical_offset = 50 * (6 - num_lines)
+        text_clips = []
+        vertical_line_height = 100
+        for i in range(len(text_lines)):
+            text = text_lines[i]
+            if len(text) > 0:
+                txt_clip = (
+                    mpy.TextClip(
+                        text,
+                        font="Charter-bold",
+                        color="White",
+                        kerning=4,
+                        fontsize=60,
+                    )
+                    .set_position(
+                        (
+                            "center",
+                            vertical_margin
+                            + vertical_offset
+                            + (vertical_line_height * i),
+                        )
+                    )
+                    .set_duration(duration)
+                    .set_start(start_time)
+                )
+                text_clips.append(txt_clip)
+        return text_clips
+
     def concatenate_text_clips_lyrics(
         list_of_text_tuples,
         vertical_margin,
@@ -87,7 +117,7 @@ class VideoMakerFunctions:
         song_title,
         artist_name,
     ):
-        # Each tuple should be formatted as (text, duration)
+        # Each tuple should be formatted as (text_page_list, duration) where text_page_list is a list of lines
         current_start = title_page_duration
         buffer = 0
         initial_text_clip = VideoMakerFunctions.create_text_page_lyric_title(
@@ -99,11 +129,10 @@ class VideoMakerFunctions:
         )
         text_clips = initial_text_clip
         for text_tuple in list_of_text_tuples:
-            curr_text_clips = VideoMakerFunctions.add_text(
+            curr_text_clips = VideoMakerFunctions.add_text_lyrics(
                 text_tuple[0],
                 current_start,
                 text_tuple[1],
-                max_chars_per_line,
                 vertical_margin,
             )
             for text_clip in curr_text_clips:
@@ -343,7 +372,7 @@ class LyricVideoMaker:
     # Should create both a horizontal and vertical video when provided lyric pages, music, and splits for when to move to the next lyric page
     def create_both_video_formats(
         list_of_text_tuples, audio_path, title_page_duration, song_title, artist_name
-    ):
+    ):  # Each tuple should be formatted as (text_page_list, duration) where text_page_list is a list of lines
         HorizontalVideoMaker.main(
             list_of_text_tuples,
             audio_path,
