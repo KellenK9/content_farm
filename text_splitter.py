@@ -32,9 +32,7 @@ class TextSplitter:  # TODO: Needs tests
                             len(list_of_sentences[i]) + len(final_list[-1])
                             < TextSplitter.on_screen_char_limit
                         ):
-                            final_list[-1] = (
-                                f"{final_list[len(final_list) - 1]} {list_of_sentences[i]}"
-                            )
+                            final_list[-1] = f"{final_list[-1]} {list_of_sentences[i]}"
                         else:
                             final_list.append(list_of_sentences[i])
                     else:
