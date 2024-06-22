@@ -106,7 +106,7 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
     curr_time = time.time()
     LyricVideoMaker.create_both_video_formats(
         list_of_text_tuples,
-        temp_audio_path,
+        f"{temp_audio_path}/{song_title}.mp4",
         title_page_duration,
         song_title,
         artist_name,
