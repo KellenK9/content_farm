@@ -333,7 +333,12 @@ class HorizontalVideoMaker:
         for i in range(len(list_of_text_tuples)):
             total_duration += list_of_text_tuples[i][1]
         all_text_clips = VideoMakerFunctions.concatenate_text_clips_lyrics(
-            list_of_text_tuples, title_page_duration, song_title, artist_name
+            list_of_text_tuples,
+            VerticalVideoMaker.VERTICAL_MARGIN,
+            VerticalVideoMaker.max_chars_per_line,
+            title_page_duration,
+            song_title,
+            artist_name,
         )
         music_audio = VideoMakerFunctions.import_audio(audio_path)
         compilation = HorizontalVideoMaker.compile_video(

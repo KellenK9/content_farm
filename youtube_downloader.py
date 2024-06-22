@@ -19,7 +19,12 @@ class YouTubeDownloader:
     def downloadYouTubeAudio(video_url, path):
 
         yt = YouTube(video_url)
-        yt = yt.streams.filter(only_audio=True).order_by("abr").desc().first()
+        yt = (
+            yt.streams.filter(only_audio=True, file_extension="mp4")
+            .order_by("abr")
+            .desc()
+            .first()
+        )
         if not os.path.exists(path):
             os.makedirs(path)
         yt.download(path)
