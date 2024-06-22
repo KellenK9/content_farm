@@ -97,7 +97,7 @@ class VideoMakerFunctions:
             artist_name,
             vertical_margin,
         )
-        text_clips = [initial_text_clip]
+        text_clips = initial_text_clip
         for text_tuple in list_of_text_tuples:
             curr_text_clips = VideoMakerFunctions.add_text(
                 text_tuple[0],
@@ -232,7 +232,7 @@ class VerticalVideoMaker:
                 clips=text_clips,
                 size=VerticalVideoMaker.SCREEN_SIZE,
             )
-            .on_color(color=HorizontalVideoMaker.BLACK, col_opacity=1)
+            .on_color(color=VerticalVideoMaker.BLACK, col_opacity=1)
             .set_duration(total_duration)
             .set_audio(compiled_audio)
         )

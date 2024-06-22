@@ -5,9 +5,12 @@ Then running the Magick installer and specifying a path for it
 Then run the espeak installer and add C:\Program Files\eSpeak NG to PATH
 Finish by rebooting the system
 
-Then, before running commands run the line below:
+Probably isn't needed, but could try running what's below
+Before running commands run the line below:
 Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
 
+On each new machine, test which ffmpeg encoders run fastest. List them all with:
+ffmpeg -encoders
 
 Future Upgrades:
 -Train own TTS model
