@@ -397,7 +397,7 @@ class EncodingTester:
     VERTICAL_MARGIN = 240
     FOOTER_HEIGHT = 60
     max_chars_per_line = 30
-    list_of_encodings = []
+    list_of_encodings = ["av1_nvenc", "h264_nvenc", "hevc_nvenc"]
 
     def compile_lyric_video(imported_video, total_duration):
         final_clip = (
@@ -417,9 +417,7 @@ class EncodingTester:
             35,
             total_duration,
         )
-        compilation = VerticalVideoMaker.compile_lyric_video(
-            imported_video, total_duration
-        )
+        compilation = EncodingTester.compile_lyric_video(imported_video, total_duration)
         times_to_complete = []
         for encoding in EncodingTester.list_of_encodings:
             curr_time = time.time()
