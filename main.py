@@ -79,7 +79,7 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
         lines, horizontal_max_chars_per_line, horizontal_max_lines_on_screen
     )
     text_pages_vertical = TextSplitter.lyric_text_splitter(
-        lines, vertical_max_chars_per_line, horizontal_max_lines_on_screen
+        lines, vertical_max_chars_per_line, vertical_max_lines_on_screen
     )
     times_to_complete.append(("Text Splitter with Python", time.time() - curr_time))
 
