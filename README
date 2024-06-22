@@ -20,7 +20,7 @@ Future Upgrades:
 -Add other video types
 
 Next Steps:
--Finish Lyric Scraper
+-Implement manual lyric splitter to determine page durations
 -Text Splitter is removing parts of story?!?!?
 -Auto Upload videos to YouTube and TikTok
 -Generate Icon and Banner for YouTube and TikTok accounts

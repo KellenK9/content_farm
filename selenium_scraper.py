@@ -65,7 +65,7 @@ class RedditScraper:
         return paragraphs_text
 
 
-class LyricScraper:
+class LyricScraperGenius:
     # Set Global Variables
     timeout = 10
 
@@ -86,26 +86,70 @@ class LyricScraper:
 
     def main():
         print("driver")
-        path = LyricScraper.buildPath()
+        path = LyricScraperGenius.buildPath()
         print("built path")
-        driver = LyricScraper.launchBrowser(path)
+        driver = LyricScraperGenius.launchBrowser(path)
         print("got driver")
 
         # Get Body Text
         body = EC.presence_of_element_located((By.ID, "lyrics-root-pin-spacer"))
         print("waiting")
-        WebDriverWait(driver, LyricScraper.timeout).until(body)
+        WebDriverWait(driver, LyricScraperGenius.timeout).until(body)
         print("done waiting")
+        song_title = driver.find_element(
+            By.CLASS_NAME, "SongHeaderdesktop__HiddenMask-sc-1effuo1-11"
+        )
+        artist_name = driver.find_element(
+            By.CLASS_NAME, "HeaderArtistAndTracklistdesktop__Artist-sc-4vdeb8-1"
+        )
         paragraphs = driver.find_elements(
-            By.CLASS_NAME, "ReferentFragmentdesktop__Highlight-sc-110r0d9-1 jAzSMw"
+            By.CLASS_NAME, "ReferentFragmentdesktop__Highlight-sc-110r0d9-1"
         )
         print(len(paragraphs))
         paragraphs_text = []
         for p in paragraphs:
             paragraphs_text.append(p.text)
-            print(p)
+            print(p.text)
+
+        return [song_title.text, artist_name.text, paragraphs_text]
+
+
+class LyricScraperAZ:
+    # Set Global Variables
+    timeout = 10
+
+    def buildPath():
+        path_start = "https://www.azlyrics.com/lyrics/"
+        artist = "childishgambino"  # Artist name should be lowercase with no spaces
+        song = "sweatpants"  # Song name should be lowercase with no spaces. Some songs may include strange titles
+        path = f"{path_start}{artist}/{song}.html"
+        return path
+
+    def launchBrowser(path):
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument("--start-maximized")
+        driver = webdriver.Chrome(options=chrome_options)
+
+        driver.get(path)
+        return driver
+
+    def main():
+        print("driver")
+        path = LyricScraperAZ.buildPath()
+        print("built path")
+        driver = LyricScraperAZ.launchBrowser(path)
+        print("got driver")
+
+        # Get Body Text
+        body = EC.presence_of_element_located()
+        print("waiting")
+        WebDriverWait(driver, LyricScraperAZ.timeout).until(body)
+        print("done waiting")
+        paragraphs = driver.find_elements()
+        print(len(paragraphs))
+        paragraphs_text = []
+        for p in paragraphs:
+            paragraphs_text.append(p.text)
+            print(p.text)
 
         return paragraphs_text
-
-
-# LyricScraper.main() # It's getting stuck and taking forever

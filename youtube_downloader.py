@@ -35,6 +35,8 @@ class YouTubeDownloader:
         )
 
 
+"""
 YouTubeDownloader.download_both(
     "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley", "Rickroll"
 )
+"""
