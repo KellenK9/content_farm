@@ -177,9 +177,10 @@ class LyricScraperSing:
         body = EC.presence_of_element_located((By.CLASS_NAME, "contentbox"))
         WebDriverWait(driver, LyricScraperSing.timeout).until(body)
         paragraphs = driver.find_elements(By.CLASS_NAME, "lyrics_part_text")
-        driver.quit()
         paragraphs_text = []
         for p in paragraphs:
             paragraphs_text.append(p.text)
+
+        driver.quit()
 
         return paragraphs_text
