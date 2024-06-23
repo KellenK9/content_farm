@@ -76,7 +76,7 @@ class TextSplitter:  # TODO: Needs tests
 
         return final_splits
 
-    def lyric_text_splitter(
+    def lyric_text_splitter(  # Not at all working lmao
         list_of_lines, max_chars_per_line, max_lines_on_screen
     ):  # Key difference for lyrics is that lines are coming in instead of paragraphs
         list_of_text_pages = []  # Each element in list is a list of sentences

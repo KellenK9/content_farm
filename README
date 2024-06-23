@@ -22,6 +22,7 @@ Future Upgrades:
 -Test speed/size of different audio and video formats
 
 Next Steps:
+-Fix lyric_text_splitter
 -Implement manual lyric splitter to determine page durations
 -Text Splitter is removing parts of story?!?!? Write tests for text splitter and fix logic
 -Auto Upload videos to YouTube and TikTok
