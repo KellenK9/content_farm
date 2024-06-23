@@ -188,7 +188,7 @@ class VideoMakerFunctions:
         return text_clips
 
     def export_video(final_clip, export_name, fps):
-        final_clip.write_videofile(f"h{export_name}.mp4", fps=fps)
+        final_clip.write_videofile(f"h{export_name}.mp4", fps=fps, codec="h264_nvenc")
 
     def import_audio(audio_path):
         return mpy.AudioFileClip(audio_path)
@@ -397,7 +397,7 @@ class EncodingTester:
     VERTICAL_MARGIN = 240
     FOOTER_HEIGHT = 60
     max_chars_per_line = 30
-    list_of_encodings = ["av1_nvenc", "h264_nvenc", "hevc_nvenc"]
+    list_of_encodings = ["h264_nvenc"]
 
     def compile_lyric_video(imported_video, total_duration):
         final_clip = (
@@ -426,6 +426,3 @@ class EncodingTester:
 
         for tuple in times_to_complete:
             print(f"{tuple[0]} took {tuple[1]} seconds.")
-
-
-EncodingTester.main_lyric_format()
