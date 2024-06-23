@@ -23,7 +23,7 @@ class TextSplitter:  # TODO: Needs tests
                 for i in range(len(list_of_sentences)):
                     if len(list_of_sentences[i]) > TextSplitter.on_screen_char_limit:
                         split_sentences = TextSplitter.sentence_splitter(
-                            list_of_sentences[i]
+                            list_of_sentences[i], TextSplitter.on_screen_char_limit
                         )
                         for sentence_piece in split_sentences:
                             final_list.append(sentence_piece)
@@ -50,7 +50,7 @@ class TextSplitter:  # TODO: Needs tests
             list_of_sentences[i] = f"{list_of_sentences[i]}."
         return list_of_sentences
 
-    def sentence_splitter(sentence):  # TODO: Needs a lot of work.
+    def sentence_splitter(sentence, split_char_limit):  # TODO: Needs a lot of work.
         final_splits = []
         still_splitting = [sentence]
         splitting_characters = ["!", ";", ":", " "]
@@ -59,13 +59,13 @@ class TextSplitter:  # TODO: Needs tests
         for char in splitting_characters:
             if len(still_splitting) > 0:
                 for chunk in still_splitting:
-                    if len(chunk) > TextSplitter.on_screen_char_limit:
+                    if len(chunk) > split_char_limit:
                         if char in chunk:
                             sentence_split = chunk.split(char)
                             for i in range(len(sentence_split)):
                                 sentence_split[i] = f"{sentence_split[i]}{char}"
                             for split in sentence_split:
-                                if len(split) < TextSplitter.on_screen_char_limit:
+                                if len(split) < split_char_limit:
                                     final_splits.append(split)
                                 else:
                                     still_splitting_temp.append(split)
@@ -76,7 +76,7 @@ class TextSplitter:  # TODO: Needs tests
 
         return final_splits
 
-    def lyric_text_splitter(  # Not at all working lmao
+    def lyric_text_splitter(
         list_of_lines, max_chars_per_line, max_lines_on_screen
     ):  # Key difference for lyrics is that lines are coming in instead of paragraphs
         list_of_text_pages = []  # Each element in list is a list of sentences
@@ -88,7 +88,7 @@ class TextSplitter:  # TODO: Needs tests
                     curr_text_page = []
                 curr_text_page.append(line)
             else:
-                split_lines = TextSplitter.sentence_splitter(line)
+                split_lines = TextSplitter.sentence_splitter(line, max_chars_per_line)
                 if len(curr_text_page) + len(split_lines) >= max_lines_on_screen:
                     list_of_text_pages.append(curr_text_page)
                     curr_text_page = []
