@@ -3,18 +3,16 @@ Run the CUDA installer
 pip install -r requirements
 Then running the Magick installer and specifying a path for it
 Then run the espeak installer and add C:\Program Files\eSpeak NG to PATH
+Downloading ffmpeg, place in C:, and add ffmpeg bin to PATH
 Finish by rebooting the system
 
 Probably isn't needed, but could try running what's below
 Before running commands run the line below:
 Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
 
-On each new machine, test which ffmpeg encoders run fastest. List them all with:
-ffmpeg -encoders
-
 Future Upgrades:
 -Train own TTS model
--Run MoviePY and TTS on GPU with CUDA
+-Run TTS on GPU with CUDA
 -Add () and "" to text splitter
 -Account for sets of multiple periods, especially ... in text splitter
 -Account for periods between () and "" in text splitter
