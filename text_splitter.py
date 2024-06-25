@@ -66,10 +66,23 @@ class TextSplitter:  # TODO: Needs tests
                                 sentence_split[i] = f"{sentence_split[i]}{char}"
                             for split in sentence_split:
                                 if len(split) < split_char_limit:
-                                    final_splits.append(split)
+                                    if len(final_splits) > 0:
+                                        if (
+                                            len(split) + len(final_splits[-1])
+                                            < split_char_limit
+                                        ):
+                                            final_splits[-1] = (
+                                                f"{final_splits[-1]} {split}"  # Appends split to last page if it fits
+                                            )
+                                        else:
+                                            final_splits.append(split)
+                                    else:
+                                        final_splits.append(split)
                                 else:
                                     still_splitting_temp.append(split)
-                    else:  # Do we ever even hit this??
+                        else:
+                            still_splitting_temp.append(chunk)
+                    else:
                         final_splits.append(chunk)
                 still_splitting = still_splitting_temp
                 still_splitting_temp = []
@@ -104,6 +117,7 @@ class TextSplitter:  # TODO: Needs tests
             "Here is a second short paragraph."
             "Here is a third short paragraph."
             "Here is the fourth paragraph and boy is it a doozy. We want this paragraph to exceed the 190 character limit set for a single page. This will help test how it splits such paragraphs. This last sentence is what will pass the limit; can't wait to see the result",
+            "Here is the fifth paragraph and its goal is to have no periods while still exceeding the massive 190 character limit set for a single page and this will surely be a run on sentence but that's okay since that is the goal of this massive sentence.",
         ]
         output_generated = TextSplitter.text_splitter(test_input)
         for page_of_text in output_generated:
@@ -111,4 +125,7 @@ class TextSplitter:  # TODO: Needs tests
         print(len(output_generated))
         # Try testing multiple periods in a row
         # Change () to have higher importance than .
-        # Check logic for paragraphs that are too large with not breaking chars getting omitted
+        # Remove excess period created when splitting on . and adding back in a .
+
+
+TextSplitter.test_sentence_splitter()

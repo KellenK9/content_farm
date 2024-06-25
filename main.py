@@ -221,9 +221,13 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
         print(f"{tuple[0]} took {tuple[1]} seconds.")
 
 
+"""
 create_lyric_video(
     "Push Ups",
     "Drake",
     "https://www.letssingit.com/drake-lyrics-push-ups-srp8n8w",
     "https://www.youtube.com/watch?v=HKH9p19PRLA&ab_channel=Drake-Topic",
 )
+"""
+
+create_reddit_story_video()

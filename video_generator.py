@@ -304,7 +304,7 @@ class VerticalVideoMaker:
         compilation = VerticalVideoMaker.compile_video(
             imported_video, footer_clip, all_text_clips, compiled_audio, total_duration
         )
-        VideoMakerFunctions.export_video(compilation, "vertical_lyric_video", 10)
+        VideoMakerFunctions.export_video(compilation, "vertical_story_video", 10)
 
     def main_lyric_format(
         list_of_text_tuples, audio_path, title_page_duration, song_title, artist_name
