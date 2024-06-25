@@ -126,6 +126,7 @@ class TextSplitter:  # TODO: Needs tests
         # Try testing multiple periods in a row
         # Change () to have higher importance than .
         # Remove excess period created when splitting on . and adding back in a .
+        # Replace acronyms with fully spelled out words for TTS, while keeping acronym form in text
 
 
 TextSplitter.test_sentence_splitter()
