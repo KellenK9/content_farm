@@ -13,6 +13,36 @@ class TTSGenerator:
     device = "cuda" if torch.cuda.is_available() else "cpu"
     output_path = "output.wav"
 
+    acronym_dict = {
+        "FIL": "father in law",
+        "MIL": "mother in law",
+        "BIL": "brother in law",
+        "SIL": "sister in law",
+        "AITAH": "am I the asshole",
+        "AITA": "am I the asshole",
+        "AFAIK": "as far as I know",
+        "AMA": "ask me anything",
+        "CMV": "change my view",
+        "ELI5": "explain it like I'm 5",
+        "HMB": "hold my beer",
+        "IIRC": "if I recall correctly",
+        "IMO": "in my opinion",
+        "IMHO": "in my honest opinion",
+        "IRL": "in real life",
+        "NSFW": "not safe for work",
+        "PSA": "public service announcement",
+        "TIL": "today I learned",
+        "TIFU": "today I fucked up",
+        "WIP": "work in progress",
+        "YSK": "you should know",
+    }
+
+    def replace_acronyms(text):
+        for acronym in TTSGenerator.acronym_dict:
+            if acronym in text:
+                text = text.replace(acronym, TTSGenerator.acronym_dict[acronym])
+        return text
+
     def print_TTS_models():
         print(TTS().list_models())
         # "<model_type>/<language>/<dataset>/<model_name>"
@@ -38,6 +68,7 @@ class TTSGenerator:
         )
 
     def single_speaker_model(model_name, file_path, text):
+        text = TTSGenerator.replace_acronyms(text)
         # Init TTS with the target model name and run
         tts = TTS(model_name=model_name)  # , gpu=True)
         print(f"text for use is: {text}")

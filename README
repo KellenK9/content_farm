@@ -13,18 +13,25 @@ Start-Process -FilePath "C:\Program Files\eSpeak NG\espeak-ng.exe"
 Future Upgrades:
 -Train own TTS model
 -Run TTS on GPU with CUDA
--Add () and "" to text splitter
--Account for sets of multiple periods, especially ... in text splitter
--Account for periods between () and "" in text splitter
 -Get TTS to pause a little for ()
 -Allow mixing of original video's audio with TTS generated audio
--Add other video types
--Test speed/size of different audio and video formats
+-Add slideshow format videos
+-Add more acronyms
+-Remove pause in TTS when text pages split mid-sentence. Could generate a setcond audio clip that reads both pages, and use the original audio to tell when to turn the page
+
+Text Splitter Upgrades:
+-Add () and ""
+-Account for sets of multiple periods, especially ...
+-Account for periods between () and ""
+-Try testing multiple periods in a row
+-Change () to have higher importance than .
+-Remove excess period created when splitting on . and adding back in a .
+
+Bug Fixes:
+-Fix vertical lyric vid's text slides
 
 Next Steps:
--Fix vertical lyric vid's text slides
 -Implement manual lyric splitter to determine page durations
--Text Splitter is removing parts of story?!?!? Write tests for text splitter and fix logic
 -Auto Upload videos to YouTube and TikTok
 -Generate Icon and Banner for YouTube and TikTok accounts
 -Create YouTube and TikTok accounts
