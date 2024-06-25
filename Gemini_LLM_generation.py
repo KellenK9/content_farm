@@ -1,4 +1,4 @@
-import google.generativeai as genai
+import google.generativeai as genai  # PAckage conflicts. Not currently in use
 import os
 
 genai.configure(api_key=os.environ["API_KEY"])
