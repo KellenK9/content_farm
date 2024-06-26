@@ -23,13 +23,17 @@ import time
 
 
 def create_reddit_story_video():
+    # Declare Variables
     list_of_text_tuples = []
     times_to_complete = []
+    total_body_audio_export_path = "total_audio"
 
+    # Reddit Scraper
     curr_time = time.time()
     title, paragraphs = RedditScraper.main()
     times_to_complete.append(("Reddit Scraper with Selenium", time.time() - curr_time))
 
+    # Text Splitter
     curr_time = time.time()
     text_pages_body = TextSplitter.text_splitter(paragraphs)
     text_pages = [title]
@@ -37,6 +41,7 @@ def create_reddit_story_video():
         text_pages.append(page)
     times_to_complete.append(("Text Splitter with Python", time.time() - curr_time))
 
+    # Text To Speech
     curr_time = time.time()
     for i in range(len(text_pages)):
         duration = TTSGenerator.single_speaker_model(
@@ -45,12 +50,33 @@ def create_reddit_story_video():
             text_pages[i],
         )
         list_of_text_tuples.append((text_pages[i], duration))
+    total_body_audio_duration = TTSGenerator.single_speaker_model(
+        "tts_models/en/ljspeech/overflow",
+        total_body_audio_export_path,
+        "".join(paragraphs),
+    )
+    duration_sum = 0
+    for i in range(len(list_of_text_tuples)):
+        if i > 0:
+            duration_sum += list_of_text_tuples[i][1]
+    for i in range(len(list_of_text_tuples)):
+        if i > 0:
+            list_of_text_tuples[i][1] = (
+                list_of_text_tuples[i][1] * total_body_audio_duration / duration_sum
+            )
     times_to_complete.append(("Text To Speech with CoquiTTS", time.time() - curr_time))
 
+    # Video Generation
     curr_time = time.time()
-    VerticalVideoMaker.main_story_format(list_of_text_tuples)
+    VerticalVideoMaker.main_story_format(
+        list_of_text_tuples,
+        "0",
+        total_body_audio_export_path,
+        total_body_audio_duration,
+    )
     times_to_complete.append(("Video Generation with MoviePY", time.time() - curr_time))
 
+    # Print how long each process took
     for tuple in times_to_complete:
         print(f"{tuple[0]} took {tuple[1]} seconds.")
 

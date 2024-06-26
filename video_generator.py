@@ -281,14 +281,15 @@ class VerticalVideoMaker:
         return mixed
 
     def main_story_format(
-        list_of_text_tuples,
+        list_of_text_tuples, title_audio_path, body_audio_path, body_duration
     ):  # Each tuple should be formatted as (text, duration)
-        total_duration = 0
-        audio_tuples_list = []  # Each tuple is (audio clip, duration)
-        for i in range(len(list_of_text_tuples)):
-            total_duration += list_of_text_tuples[i][1]
-            curr_clip = VerticalVideoMaker.create_audio_clip(i)
-            audio_tuples_list.append((curr_clip, list_of_text_tuples[i][1]))
+        total_duration = list_of_text_tuples[0][1] + body_duration
+        title_audio_clip = VerticalVideoMaker.create_audio_clip(title_audio_path)
+        body_audio_clip = VerticalVideoMaker.create_audio_clip(body_audio_path)
+        audio_tuples_list = [
+            (title_audio_clip, list_of_text_tuples[0][1]),
+            (body_audio_clip, body_duration),
+        ]  # Each tuple is (audio clip, duration)
         compiled_audio = VerticalVideoMaker.concatenate_audio(audio_tuples_list)
         imported_video = VerticalVideoMaker.import_video_clip(
             "videos_for_import/Tom and Jerry - 002 - Midnight Snack [1941].mp4",

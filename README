@@ -26,6 +26,8 @@ Text Splitter Upgrades:
 -Try testing multiple periods in a row
 -Change () to have higher importance than .
 -Remove excess period created when splitting on . and adding back in a . (Might be complete, have to test) (extra ; should also be fixed, have to test) also test acronym replacement and Reddit post title
+-Test the below piece next
+Read title and body in 1 go each. For the body, take the total time of each text_page and get the ratio between it and the audio duration. Multiply this ratio by each individual text page's duration to get the duration to use for each text page.
 
 Bug Fixes:
 -Fix vertical lyric vid's text slides
