@@ -67,7 +67,7 @@ def create_reddit_story_video():
             )
         else:
             adjusted_duration = list_of_text_tuples[i][1]
-        new_list_of_text_tuples.append(list_of_text_tuples[i][0], adjusted_duration)
+        new_list_of_text_tuples.append((list_of_text_tuples[i][0], adjusted_duration))
     times_to_complete.append(("Text To Speech with CoquiTTS", time.time() - curr_time))
 
     # Video Generation
