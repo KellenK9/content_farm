@@ -124,6 +124,3 @@ class TextSplitter:  # TODO: Needs tests
         for page_of_text in output_generated:
             print(page_of_text)
         print(len(output_generated))
-
-
-TextSplitter.test_sentence_splitter()
