@@ -25,7 +25,7 @@ Text Splitter Upgrades:
 -Account for periods between () and ""
 -Try testing multiple periods in a row
 -Change () to have higher importance than .
--Remove excess period created when splitting on . and adding back in a .
+-Remove excess period created when splitting on . and adding back in a . (Might be complete, have to test)
 
 Bug Fixes:
 -Fix vertical lyric vid's text slides

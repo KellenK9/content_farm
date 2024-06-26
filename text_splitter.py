@@ -47,7 +47,8 @@ class TextSplitter:  # TODO: Needs tests
     def paragraph_splitter(paragraph):
         list_of_sentences = paragraph.split(".")
         for i in range(len(list_of_sentences)):
-            list_of_sentences[i] = f"{list_of_sentences[i]}."
+            if len(list_of_sentences[i]) > 1:
+                list_of_sentences[i] = f"{list_of_sentences[i]}."
         return list_of_sentences
 
     def sentence_splitter(sentence, split_char_limit):  # TODO: Needs a lot of work.
