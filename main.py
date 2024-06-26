@@ -59,17 +59,21 @@ def create_reddit_story_video():
     for i in range(len(list_of_text_tuples)):
         if i > 0:
             duration_sum += list_of_text_tuples[i][1]
+    new_list_of_text_tuples = []
     for i in range(len(list_of_text_tuples)):
         if i > 0:
-            list_of_text_tuples[i][1] = (
+            adjusted_duration = (
                 list_of_text_tuples[i][1] * total_body_audio_duration / duration_sum
             )
+        else:
+            adjusted_duration = list_of_text_tuples[i][1]
+        new_list_of_text_tuples.append(list_of_text_tuples[i][0], adjusted_duration)
     times_to_complete.append(("Text To Speech with CoquiTTS", time.time() - curr_time))
 
     # Video Generation
     curr_time = time.time()
     VerticalVideoMaker.main_story_format(
-        list_of_text_tuples,
+        new_list_of_text_tuples,
         "0",
         total_body_audio_export_path,
         total_body_audio_duration,
