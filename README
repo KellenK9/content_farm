@@ -18,7 +18,6 @@ Future Upgrades:
 -Add slideshow format videos
 -Add more acronyms
 -Remove pause in TTS when text pages split mid-sentence. Could generate a setcond audio clip that reads both pages, and use the original audio to tell when to turn the page
--Add title of Reddit post to videos
 
 Text Splitter Upgrades:
 -Add () and ""

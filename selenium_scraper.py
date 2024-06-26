@@ -62,7 +62,7 @@ class RedditScraper:
         for p in paragraphs:
             paragraphs_text.append(p.text)
 
-        return paragraphs_text
+        return title, paragraphs_text
 
 
 class LyricScraperGenius:  # Genius has anti-scraping measures implemented

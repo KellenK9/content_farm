@@ -27,11 +27,14 @@ def create_reddit_story_video():
     times_to_complete = []
 
     curr_time = time.time()
-    paragraphs = RedditScraper.main()
+    title, paragraphs = RedditScraper.main()
     times_to_complete.append(("Reddit Scraper with Selenium", time.time() - curr_time))
 
     curr_time = time.time()
-    text_pages = TextSplitter.text_splitter(paragraphs)
+    text_pages_body = TextSplitter.text_splitter(paragraphs)
+    text_pages = [title]
+    for page in text_pages_body:
+        text_pages.append(page)
     times_to_complete.append(("Text Splitter with Python", time.time() - curr_time))
 
     curr_time = time.time()
