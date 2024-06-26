@@ -63,7 +63,7 @@ class TextSplitter:  # TODO: Needs tests
                     if len(chunk) > split_char_limit:
                         if char in chunk:
                             sentence_split = chunk.split(char)
-                            for i in range(len(sentence_split)):
+                            for i in range(len(sentence_split) - 1):
                                 sentence_split[i] = f"{sentence_split[i]}{char}"
                             for split in sentence_split:
                                 if len(split) < split_char_limit:
