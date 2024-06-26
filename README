@@ -18,6 +18,8 @@ Future Upgrades:
 -Add slideshow format videos
 -Add more acronyms
 -Remove pause in TTS when text pages split mid-sentence. Could generate a setcond audio clip that reads both pages, and use the original audio to tell when to turn the page
+-Stylize story title page to indicate title page vs body page
+-Choose videos to use in lower half of screen that are snappier and pull in attention. Speed up Tom and Jerry clips?
 
 Text Splitter Upgrades:
 -Add () and ""
@@ -25,8 +27,7 @@ Text Splitter Upgrades:
 -Account for periods between () and ""
 -Try testing multiple periods in a row
 -Change () to have higher importance than .
--Remove excess period created when splitting on . and adding back in a . (Might be complete, have to test) (extra ; should also be fixed, have to test) also test acronym replacement and Reddit post title
--Test the below piece next
+-Test the below piece next!
 Read title and body in 1 go each. For the body, take the total time of each text_page and get the ratio between it and the audio duration. Multiply this ratio by each individual text page's duration to get the duration to use for each text page.
 
 Bug Fixes:
