@@ -25,6 +25,7 @@ import time
 def create_reddit_story_video():
     list_of_text_tuples = []
     times_to_complete = []
+    total_body_audio_export_path = "total_audio"
 
     curr_time = time.time()
     title, paragraphs = RedditScraper.main()
