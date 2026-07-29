@@ -1,6 +1,9 @@
+import os
 import moviepy.editor as mpy
 import moviepy.video.fx.all as vfx
 import time
+
+GENERATED_CONTENT_ROOT = os.path.join(os.path.dirname(__file__), "generated_content")
 
 
 class VideoMakerFunctions:
@@ -188,7 +191,9 @@ class VideoMakerFunctions:
         return text_clips
 
     def export_video(final_clip, export_name, fps):
-        final_clip.write_videofile(f"h{export_name}.mp4", fps=fps, codec="h264_nvenc")
+        os.makedirs(GENERATED_CONTENT_ROOT, exist_ok=True)
+        output_path = os.path.join(GENERATED_CONTENT_ROOT, f"h{export_name}.mp4")
+        final_clip.write_videofile(output_path, fps=fps, codec="h264_nvenc")
 
     def import_audio(audio_path):
         return mpy.AudioFileClip(audio_path)
@@ -421,7 +426,9 @@ class EncodingTester:
         times_to_complete = []
         for encoding in EncodingTester.list_of_encodings:
             curr_time = time.time()
-            compilation.write_videofile("test.mp4", fps=10, codec=encoding)
+            os.makedirs(GENERATED_CONTENT_ROOT, exist_ok=True)
+            output_path = os.path.join(GENERATED_CONTENT_ROOT, "test.mp4")
+            compilation.write_videofile(output_path, fps=10, codec=encoding)
             times_to_complete.append((encoding, time.time() - curr_time))
 
         for tuple in times_to_complete:

@@ -3,6 +3,25 @@ import os
 
 
 class YouTubeDownloader:
+    @staticmethod
+    def resolve_output_path(path):
+        if os.path.isabs(path):
+            return path
+
+        normalized_path = os.path.normpath(path.replace("\\", "/"))
+        if normalized_path == ".":
+            normalized_path = ""
+        if normalized_path == "generated_content" or normalized_path.startswith(
+            "generated_content/"
+        ):
+            return os.path.join(os.path.dirname(__file__), normalized_path)
+
+        return os.path.join(
+            os.path.dirname(__file__),
+            "generated_content",
+            normalized_path.lstrip("./"),
+        )
+
     def downloadYouTubeVideo(video_url, path):
 
         yt = YouTube(video_url)
@@ -12,9 +31,10 @@ class YouTubeDownloader:
             .desc()
             .first()
         )
-        if not os.path.exists(path):
-            os.makedirs(path)
-        yt.download(path)
+        output_path = YouTubeDownloader.resolve_output_path(path)
+        if not os.path.exists(output_path):
+            os.makedirs(output_path, exist_ok=True)
+        yt.download(output_path)
 
     def downloadYouTubeAudio(video_url, path):
 
@@ -25,9 +45,10 @@ class YouTubeDownloader:
             .desc()
             .first()
         )
-        if not os.path.exists(path):
-            os.makedirs(path)
-        yt.download(path)
+        output_path = YouTubeDownloader.resolve_output_path(path)
+        if not os.path.exists(output_path):
+            os.makedirs(output_path, exist_ok=True)
+        yt.download(output_path)
 
     def download_both(video_url, export_file_name):
         YouTubeDownloader.downloadYouTubeVideo(

@@ -1,7 +1,10 @@
+import os
 import torch
 from TTS.api import TTS
 import time
 import librosa
+
+GENERATED_CONTENT_ROOT = os.path.join(os.path.dirname(__file__), "generated_content")
 
 # Tortoise Imports
 # from TTS.tts.configs.tortoise_config import TortoiseConfig
@@ -11,7 +14,7 @@ import librosa
 class TTSGenerator:
     # Define Global Variables
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    output_path = "output.wav"
+    output_path = os.path.join(GENERATED_CONTENT_ROOT, "output.wav")
 
     acronym_dict = {
         "FIL": "father in law",
@@ -36,6 +39,21 @@ class TTSGenerator:
         "WIP": "work in progress",
         "YSK": "you should know",
     }
+
+    @staticmethod
+    def resolve_output_path(file_path):
+        if os.path.isabs(file_path):
+            return file_path
+
+        normalized_path = os.path.normpath(str(file_path).replace("\\", "/"))
+        if normalized_path == "generated_content" or normalized_path.startswith(
+            "generated_content/"
+        ):
+            return os.path.join(os.path.dirname(__file__), normalized_path)
+
+        output_path = os.path.join(GENERATED_CONTENT_ROOT, normalized_path)
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        return output_path
 
     def replace_acronyms(text):
         for acronym in TTSGenerator.acronym_dict:
@@ -72,11 +90,12 @@ class TTSGenerator:
         # Init TTS with the target model name and run
         tts = TTS(model_name=model_name)  # , gpu=True)
         print(f"text for use is: {text}")
+        output_file_path = TTSGenerator.resolve_output_path(f"{file_path}.wav")
         tts.tts_to_file(
             text=text,
-            file_path=f"{file_path}.wav",
+            file_path=output_file_path,
         )
-        duration = librosa.get_duration(path=f"{file_path}.wav")
+        duration = librosa.get_duration(path=output_file_path)
         return duration
 
     def tortoise_model(text):

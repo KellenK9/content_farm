@@ -1,9 +1,11 @@
+import os
+import time
+
 from text_splitter import TextSplitter
 from selenium_scraper import RedditScraper, LyricScraperSing
 from video_generator import VerticalVideoMaker, HorizontalVideoMaker, LyricVideoMaker
 from text_to_voice import TTSGenerator
 from youtube_downloader import YouTubeDownloader
-import time
 
 # This file will serve as a controller, attempting each of the tasks below
 
@@ -25,7 +27,9 @@ import time
 def create_reddit_story_video():
     list_of_text_tuples = []
     times_to_complete = []
-    total_body_audio_export_path = "total_audio"
+    generated_content_dir = os.path.join(os.path.dirname(__file__), "generated_content")
+    os.makedirs(generated_content_dir, exist_ok=True)
+    total_body_audio_export_path = os.path.join(generated_content_dir, "total_audio")
 
     curr_time = time.time()
     title, paragraphs = RedditScraper.main()
@@ -83,7 +87,12 @@ def create_lyric_video(song_title, artist_name, lyric_link, youtube_audio_link):
     list_of_text_tuples_horizontal = []
     list_of_text_tuples_vertical = []
     times_to_complete = []
-    temp_audio_path = "./temp_audio/drake-push-ups-audio"
+    temp_audio_path = os.path.join(
+        os.path.dirname(__file__),
+        "generated_content",
+        "temp_audio",
+        "drake-push-ups-audio",
+    )
     horizontal_max_chars_per_line = 50
     horizontal_max_lines_on_screen = 7
     vertical_max_chars_per_line = 30
