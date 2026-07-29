@@ -1,9 +1,7 @@
-import google.generativeai as genai  # PAckage conflicts. Not currently in use
+from google import genai
 import os
 
-genai.configure(api_key=os.environ["API_KEY"])
-
-model = genai.GenerativeModel("gemini-1.5-flash")
-
-response = model.generate_content("Write a story about a AI and magic")
-print(response.text)
+client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
+prompt = "Write a story about"
+output = client.models.generate_content(model="gemini-flash-latest", contents=prompt)
+print(output.text.strip())

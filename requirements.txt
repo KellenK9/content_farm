@@ -3,7 +3,6 @@ Pillow == 9.5.0
 networkx == 2.8.0
 transformers==4.29.2
 decorator==4.4.2
-openai
 black
 selenium
 moviepy
@@ -14,3 +13,4 @@ setuptools
 wheel
 nvidia-cuda-runtime-cu12
 pytube
+google
